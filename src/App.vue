@@ -9,7 +9,10 @@
           @click="onListDropdownClick"
         />
       </div>
-      <SocialShare />
+      <SocialShare
+        share-url="https://www.google.com/"
+        class="tax-map-app__header__social"
+      />
     </div>
     <div class="tax-map-app__body">
       <div class="tax-map-app__body__map-wrap">
@@ -156,6 +159,8 @@ export default {
     onListDropdownClick(region) {
       this.searchInput = region.region
       this.onMapClick(region.countryCode)
+      // Hide dropdown by removing focus
+      if (document.activeElement) document.activeElement.blur()
     },
     onMapClick(regionId) {
       this.selectedRegionId = regionId
@@ -204,11 +209,25 @@ export default {
   }
 
   &__header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+
     @media screen and (min-width: 680px) {
-      display: flex;
+      flex-direction: row;
       align-items: start;
       justify-content: space-between;
       margin-bottom: 30px;
+    }
+
+    &__social {
+      margin-bottom: 15px;
+      order: -1;
+
+      @media screen and (min-width: 680px) {
+        order: initial;
+        margin-bottom: 0;
+      }
     }
 
     &__search {
