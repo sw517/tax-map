@@ -47,12 +47,15 @@
 </template>
 
 <script>
+// Components
 import EuropeMap from '@/components/dynamic-maps/EuropeMap'
 import InfoPopup from '@/components/info-popups/InfoPopup'
 import TaxInfoPopup from '@/components/info-popups/TaxInfoPopup'
 import SearchInput from '@/components/forms/SearchInput'
 import ListDropdown from '@/components/forms/ListDropdown'
 import SocialShare from '@/components/SocialShare'
+// Data
+import dataStructure from '@/assets/data/tax-map-structure.json'
 
 const blankRegion = () => ({
   title: '',
@@ -76,54 +79,7 @@ export default {
   },
   data() {
     return {
-      dataStructure: {
-        searchPlaceholderText: 'Search',
-        shareText: 'Share',
-        shareToText: 'Share to',
-        selectRegionText: 'Select a region on the map to find out more info...',
-        regions: [
-          {
-            title: 'UK Tax Info',
-            countryName: 'UK',
-            countryCode: 'gb',
-            bullets: [
-              'Taxes apply only to cashed-out balances',
-              'Real Cryptocurrency holdings incur in a -5%',
-              'Declared annually',
-              'Taxes apply only to cashed-out balances.',
-              'Real Cryptocurrency holdings incur in a -5%',
-            ],
-            link: {
-              href: '/',
-              text: 'Learn How to Do your Crypto Taxes in the UK',
-            },
-          },
-          {
-            title: 'France Tax Info',
-            countryName: 'France',
-            countryCode: 'fr',
-            bullets: [
-              'Real Cryptocurrency holdings incur in a -5%',
-              'Taxes apply only to cashed-out balances',
-              'Declared annually',
-              'Taxes apply only to cashed-out balances.',
-            ],
-            link: {
-              href: '/',
-              text: 'Learn How to Do your Crypto Taxes in France',
-            },
-          },
-          {
-            title: 'Italy Tax Info',
-            countryName: 'Italy',
-            countryCode: 'it',
-            link: {
-              href: '/',
-              text: 'Learn How to Do your Crypto Taxes in France',
-            },
-          },
-        ],
-      },
+      dataStructure,
       dropdownListItems: [],
       searchInput: '',
       selectedRegionId: '',

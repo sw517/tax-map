@@ -1,0 +1,48 @@
+{
+  "searchPlaceholderText": "Search",
+  "shareText": "Share",
+  "shareToText": "Share to",
+  "selectRegionText": "Select a region on the map to find out more info...",
+  "regions": [
+    {
+      "title": "UK Tax Info",
+      "countryName": "UK",
+      "countryCode": "gb",
+      "bullets": [
+        "Taxes apply only to cashed-out balances",
+        "Real Cryptocurrency holdings incur in a -5%",
+        "Declared annually",
+        "Taxes apply only to cashed-out balances.",
+        "Real Cryptocurrency holdings incur in a -5%"
+      ],
+      "link": {
+        "href": "/",
+        "text": "Learn How to Do your Crypto Taxes in the UK"
+      }
+    },
+    {
+      "title": "France Tax Info",
+      "countryName": "France",
+      "countryCode": "fr",
+      "bullets": [
+        "Real Cryptocurrency holdings incur in a -5%",
+        "Taxes apply only to cashed-out balances",
+        "Declared annually",
+        "Taxes apply only to cashed-out balances."
+      ],
+      "link": {
+        "href": "/",
+        "text": "Learn How to Do your Crypto Taxes in France"
+      }
+    },
+    {
+      "title": "Italy Tax Info",
+      "countryName": "Italy",
+      "countryCode": "it",
+      "link": {
+        "href": "/",
+        "text": "Learn How to Do your Crypto Taxes in France"
+      }
+    }
+  ]
+}
