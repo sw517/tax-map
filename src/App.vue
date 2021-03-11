@@ -204,15 +204,6 @@ export default {
 </script>
 
 <style lang="scss">
-// Todo: Remove root scope
-:root {
-  --theme-tertiary: #ffb400;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-
 .tax-map-app {
   border: 1px solid black;
   padding: 10px;

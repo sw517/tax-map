@@ -25,7 +25,6 @@ export default {
 <style lang="scss" scoped>
 .info-popup {
   position: relative;
-  border: 1px solid #000;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
   padding: 20px;
 
@@ -40,6 +39,7 @@ export default {
     top: 0;
     right: 0;
     cursor: pointer;
+    font-size: 18px;
   }
 }
 </style>
