@@ -3,11 +3,11 @@
     <div class="list-dropdown__inner">
       <button
         v-for="option in items"
-        :key="option.region"
+        :key="option.countryName"
         class="list-dropdown__option"
         @click="$emit('click', option)"
       >
-        {{ option.region }}
+        {{ option.countryName }}
       </button>
     </div>
   </div>

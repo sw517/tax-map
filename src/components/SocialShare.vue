@@ -1,11 +1,11 @@
 <template>
   <div class="social-share">
-    <span>Share: </span>
+    <span>{{ shareText }}: </span>
     <a
       v-for="link in socialLinks"
       :key="link.name"
       :href="link.href"
-      :title="`Share to ${link.name}`"
+      :title="`${shareToText} ${link.name}`"
       :class="[
         'social-share__link',
         `social-share__link--${kebabCase(link.name)}`,
@@ -28,6 +28,14 @@ export default {
     shareUrl: {
       type: String,
       required: true,
+    },
+    shareText: {
+      type: String,
+      default: 'Share',
+    },
+    shareToText: {
+      type: String,
+      default: 'Share to',
     },
   },
   data() {

@@ -1,6 +1,12 @@
 <template>
   <div class="search-input">
-    <input type="text" :value="value" @input="onInput" placeholder="Search" />
+    <input
+      type="text"
+      :value="value"
+      @input="onInput"
+      class="search-input__input"
+      :placeholder="placeholder"
+    />
   </div>
 </template>
 <script>
@@ -10,6 +16,10 @@ export default {
     value: {
       type: String,
       default: '',
+    },
+    placeholder: {
+      type: String,
+      default: 'Search',
     },
   },
   methods: {

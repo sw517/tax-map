@@ -1,6 +1,6 @@
 <template>
   <InfoPopup :can-close="true" class="tax-info-popup" @close="onClose">
-    <div class="tax-info-popup__title">{{ region }} Tax Info</div>
+    <div class="tax-info-popup__title">{{ title }}</div>
     <ul class="tax-info-popup__bullets" v-if="bullets && bullets.length">
       <li v-for="(bullet, index) in bullets" :key="`${index}-${bullet}`">
         {{ bullet }}
@@ -17,7 +17,7 @@ export default {
   name: 'TaxInfoPopup',
   components: { InfoPopup },
   props: {
-    region: {
+    title: {
       type: String,
       required: true,
     },

@@ -2,7 +2,11 @@
   <div id="app" class="tax-map-app">
     <div class="tax-map-app__header">
       <div class="tax-map-app__header__search">
-        <SearchInput :value="searchInput" @input="onSearchInputChange" />
+        <SearchInput
+          :value="searchInput"
+          :placeholder="dataStructure.searchPlaceholderText"
+          @input="onSearchInputChange"
+        />
         <ListDropdown
           :items="dropdownListItems"
           class="tax-map-app__header__search-dropdown"
@@ -11,29 +15,31 @@
       </div>
       <SocialShare
         share-url="https://www.google.com/"
+        :share-text="dataStructure.shareText"
+        :share-to-text="dataStructure.socialLabelText"
         class="tax-map-app__header__social"
       />
     </div>
     <div class="tax-map-app__body">
-      <div class="tax-map-app__body__map-wrap">
-        <EuropeMap
-          :activeRegionId="selectedRegionId"
-          :regions="regionData"
-          class="tax-map-app__body__map"
-          @path-click="onMapClick"
-        />
-      </div>
       <div class="tax-map-app__body__info-wrap">
         <InfoPopup v-show="!showInfoPopup">
-          Select a region on the map to find out more info...
+          {{ dataStructure.selectRegionText }}
         </InfoPopup>
         <TaxInfoPopup
           v-show="showInfoPopup"
-          :region="selectedRegionData.region"
+          :title="selectedRegionData.title"
           :bullets="selectedRegionData.bullets"
           :link="selectedRegionData.link"
           class="tax-map-app__body__info-popup"
           @close="onInfoPopupClose"
+        />
+      </div>
+      <div class="tax-map-app__body__map-wrap">
+        <EuropeMap
+          :activeRegionId="selectedRegionId"
+          :regions="dataStructure.regions"
+          class="tax-map-app__body__map"
+          @path-click="onMapClick"
         />
       </div>
     </div>
@@ -49,7 +55,7 @@ import ListDropdown from '@/components/forms/ListDropdown'
 import SocialShare from '@/components/SocialShare'
 
 const blankRegion = () => ({
-  region: '',
+  title: '',
   countryCode: '',
   bullets: [],
   link: {
@@ -70,46 +76,55 @@ export default {
   },
   data() {
     return {
+      dataStructure: {
+        searchPlaceholderText: 'Search',
+        shareText: 'Share',
+        shareToText: 'Share to',
+        selectRegionText: 'Select a region on the map to find out more info...',
+        regions: [
+          {
+            title: 'UK Tax Info',
+            countryName: 'UK',
+            countryCode: 'gb',
+            bullets: [
+              'Taxes apply only to cashed-out balances',
+              'Real Cryptocurrency holdings incur in a -5%',
+              'Declared annually',
+              'Taxes apply only to cashed-out balances.',
+              'Real Cryptocurrency holdings incur in a -5%',
+            ],
+            link: {
+              href: '/',
+              text: 'Learn How to Do your Crypto Taxes in the UK',
+            },
+          },
+          {
+            title: 'France Tax Info',
+            countryName: 'France',
+            countryCode: 'fr',
+            bullets: [
+              'Real Cryptocurrency holdings incur in a -5%',
+              'Taxes apply only to cashed-out balances',
+              'Declared annually',
+              'Taxes apply only to cashed-out balances.',
+            ],
+            link: {
+              href: '/',
+              text: 'Learn How to Do your Crypto Taxes in France',
+            },
+          },
+          {
+            title: 'Italy Tax Info',
+            countryName: 'Italy',
+            countryCode: 'it',
+            link: {
+              href: '/',
+              text: 'Learn How to Do your Crypto Taxes in France',
+            },
+          },
+        ],
+      },
       dropdownListItems: [],
-      regionData: [
-        {
-          region: 'UK',
-          countryCode: 'gb',
-          bullets: [
-            'Taxes apply only to cashed-out balances',
-            'Real Cryptocurrency holdings incur in a -5%',
-            'Declared annually',
-            'Taxes apply only to cashed-out balances.',
-            'Real Cryptocurrency holdings incur in a -5%',
-          ],
-          link: {
-            href: '/',
-            text: 'Learn How to Do your Crypto Taxes in the UK',
-          },
-        },
-        {
-          region: 'France',
-          countryCode: 'fr',
-          bullets: [
-            'Real Cryptocurrency holdings incur in a -5%',
-            'Taxes apply only to cashed-out balances',
-            'Declared annually',
-            'Taxes apply only to cashed-out balances.',
-          ],
-          link: {
-            href: '/',
-            text: 'Learn How to Do your Crypto Taxes in France',
-          },
-        },
-        {
-          region: 'Italy',
-          countryCode: 'it',
-          link: {
-            href: '/',
-            text: 'Learn How to Do your Crypto Taxes in France',
-          },
-        },
-      ],
       searchInput: '',
       selectedRegionId: '',
       selectedRegionData: blankRegion(),
@@ -122,32 +137,30 @@ export default {
     },
   },
   created() {
-    this.dropdownListItems = this.regionData
+    this.dropdownListItems = this.dataStructure.regions
   },
   methods: {
     handleSearchQuery() {
       const search = this.searchInput.toLowerCase()
-      const searchedRegions = this.regionData.filter(
-        ({ region, countryCode }) => {
+      const searchedRegions = this.dataStructure.regions.filter(
+        ({ countryName, countryCode }) => {
           return (
-            region.toLowerCase().includes(search) ||
+            countryName.toLowerCase().includes(search) ||
             countryCode.toLowerCase().includes(search)
           )
         }
       )
 
-      console.log(searchedRegions)
-
       if (searchedRegions) {
         this.dropdownListItems = searchedRegions
       } else {
-        this.dropdownListItems = this.regionData
+        this.dropdownListItems = this.dataStructure.regions
       }
     },
     isValidRegion(regionData) {
       return (
         typeof regionData === 'object' &&
-        regionData.region &&
+        regionData.title &&
         regionData.countryCode &&
         regionData.link
       )
@@ -157,7 +170,7 @@ export default {
       this.showInfoPopup = false
     },
     onListDropdownClick(region) {
-      this.searchInput = region.region
+      this.searchInput = region.countryName
       this.onMapClick(region.countryCode)
       // Hide dropdown by removing focus
       if (document.activeElement) document.activeElement.blur()
@@ -176,7 +189,7 @@ export default {
       this.selectedRegionData = blankRegion()
     },
     setSelectedRegionData() {
-      const region = this.regionData.find(({ countryCode }) =>
+      const region = this.dataStructure.regions.find(({ countryCode }) =>
         countryCode.includes(this.selectedRegionId)
       )
 
@@ -256,25 +269,25 @@ export default {
     }
 
     &__map {
-      width: 680px;
-      height: 520px;
+      width: 500px;
 
-      @media screen and (min-width: 1024px) {
-        width: auto;
-        height: auto;
+      @media screen and (min-width: 768px) {
+        width: 100%;
+        min-width: 500px;
       }
     }
 
     &__map-wrap {
-      overflow: scroll;
+      overflow: auto;
 
-      @media screen and (min-width: 1024px) {
-        overflow: initial;
+      @media screen and (min-width: 768px) {
         flex-grow: 1;
       }
     }
 
     &__info-wrap {
+      margin-bottom: 10px;
+
       @media screen and (min-width: 680px) {
         order: -1;
         margin-right: 30px;
